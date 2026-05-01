@@ -10,7 +10,7 @@ export default function Dashboard() {
   const role = localStorage.getItem("role");
   const userEmail = localStorage.getItem("email");
 
-  // 🔴 LOGOUT
+  
   const handleLogout = () => {
     localStorage.clear();
     window.location.replace("/");
@@ -23,7 +23,7 @@ export default function Dashboard() {
     assignedTo: ""
   });
 
-  // FETCH TASKS
+  
   const fetchTasks = async () => {
     try {
       setLoading(true);
@@ -40,7 +40,7 @@ export default function Dashboard() {
     fetchTasks();
   }, []);
 
-  // CREATE TASK
+  
   const createTask = async () => {
     if (!form.title || !form.description || !form.assignedTo) {
       alert("Please fill all required fields");
@@ -62,25 +62,25 @@ export default function Dashboard() {
     fetchTasks();
   };
 
-  // UPDATE STATUS
+  
   const updateStatus = async (id, status) => {
     await API.put(`/task/${id}`, { status });
     fetchTasks();
   };
 
-  // ROLE BASED VIEW
+  
   const visibleTasks =
     role === "admin"
       ? tasks
       : tasks.filter((t) => t.assignedTo === userEmail);
 
-  // FILTER
+  
   const filteredTasks =
     filter === "all"
       ? visibleTasks
       : visibleTasks.filter((t) => t.status === filter);
 
-  // STATS
+  
   const total = visibleTasks.length;
   const done = visibleTasks.filter(t => t.status === "done").length;
   const pending = visibleTasks.filter(t => t.status === "pending").length;
