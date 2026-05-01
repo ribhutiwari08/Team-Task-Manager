@@ -2,11 +2,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
-import cors from "cors";
 
-app.use(cors({
-  origin: "*"
-}));
+
 
 function App() {
   return (

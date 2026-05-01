@@ -3,6 +3,11 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+import cors from "cors";
+
+app.use(cors({
+  origin: "*"
+}));
 
 const app = express();
 app.use(express.json());
