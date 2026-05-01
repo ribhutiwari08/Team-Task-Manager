@@ -1,58 +1,21 @@
-const express = require("express");
-const router = express.Router(); 
-
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const User = require("../models/User");
-
-
-router.post("/signup", async (req, res) => {
-  try {
-    const { name, email, password, role } = req.body;
-
-    const hashed = await bcrypt.hash(password, 10);
-
-    const user = await User.create({
-      name,
-      email,
-      password: hashed,
-      role
-    });
-
-    res.json(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Signup error");
-  }
-});
-
-
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).send("User not found");
+    if (!user) {
+      return res.status(400).json({ message: "User not found" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).send("Wrong password");
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-    const token = jwt.sign(
-      { id: user._id, role: user.role },
-      "secretkey"
-    );
+    res.status(200).json({ message: "Login successful", user });
 
-    res.json({
-      token,
-      role: user.role,
-      email: user.email
-    });
-
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Login error");
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
   }
 });
-
-
-module.exports = router;
