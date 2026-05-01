@@ -14,7 +14,7 @@ export default function Signup() {
 
   const handleSignup = async () => {
     try {
-      await API.post("/auth/signup", data);
+      await API.post("/api/auth/signup", data);
       alert("Signup successful");
       navigate("/");
     } catch (err) {
