@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 import cors from "cors";
+import authRoutes from "./routes/auth.js";
 
+app.use("/api/auth", authRoutes);
 app.use(cors({
   origin: "*"
 }));
