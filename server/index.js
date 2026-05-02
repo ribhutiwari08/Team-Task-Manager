@@ -8,7 +8,7 @@ const authRoutes = require("./routes/auth");
 const projectRoutes = require("./routes/project");
 const taskRoutes = require("./routes/task");
 
-const app = express();
+
 
 // ✅ CORS FIX (IMPORTANT)
 app.use(cors({
