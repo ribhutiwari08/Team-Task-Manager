@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');   // ← ADD
-const jwt = require('jsonwebtoken');  // ← ADD
-const User = require('../models/User'); // ← ADD
+const bcrypt = require('bcrypt');   
+const jwt = require('jsonwebtoken'); 
+const User = require('../models/User'); 
 
 router.post("/login", async (req, res) => {
   try {
@@ -22,4 +22,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-module.exports = router; // ← YE BHI ADD KARO
+module.exports = router; 
