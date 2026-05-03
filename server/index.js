@@ -5,19 +5,21 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ VERY IMPORTANT: CORS FIRST
+
 app.use(cors({
-  origin: "https://team-task-manager-rosy-ten.vercel.app",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: [
+    "https://team-task-manager-rosy-ten.vercel.app",
+    "https://team-task-manager-ag6h64wut-ribhutiwari08s-projects.vercel.app"
+  ],
   credentials: true
 }));
 
-// ✅ Handle preflight (this fixes your error)
+
 app.options("*", cors());
 
 app.use(express.json());
 
-// routes
+
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/project", require("./routes/project"));
 app.use("/api/task", require("./routes/task"));
