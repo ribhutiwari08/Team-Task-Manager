@@ -1,5 +1,4 @@
 const express = require("express");
-const app = express();
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
@@ -8,39 +7,36 @@ const authRoutes = require("./routes/auth");
 const projectRoutes = require("./routes/project");
 const taskRoutes = require("./routes/task");
 
+const app = express();
 
-
-// ✅ CORS FIX (IMPORTANT)
-app.use(cors({
-  origin: [
-    'https://team-task-manager-rosy-ten.vercel.app',
-    'http://localhost:5173'
-  ],
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.options("*", cors()); // 🔥 preflight fix
-
-// ✅ middleware
+// middleware
 app.use(express.json());
 
-// ✅ routes
+// CORS FIX (IMPORTANT)
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
+// routes
 app.use("/api/auth", authRoutes);
 app.use("/api/project", projectRoutes);
 app.use("/api/task", taskRoutes);
 
-// ✅ DB connect
+// DB connect
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("DB connected"))
-  .catch(err => console.log(err));
+  .then(() => console.log("✅ DB connected"))
+  .catch(err => {
+    console.error("❌ DB error:", err);
+    process.exit(1);
+  });
 
-// ✅ test route
+// test route
 app.get("/", (req, res) => {
   res.send("API Running...");
 });
 
-// ✅ server start
+// server start
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on ${PORT}`));
