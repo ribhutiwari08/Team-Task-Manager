@@ -7,10 +7,7 @@ const app = express();
 
 
 app.use(cors({
-  origin: [
-    "https://team-task-manager-rosy-ten.vercel.app",
-    "https://team-task-manager-ag6h64wut-ribhutiwari08s-projects.vercel.app"
-  ],
+  origin: true,
   credentials: true
 }));
 
